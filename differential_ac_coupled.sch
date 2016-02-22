@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="6.6.0">
+<eagle version="6.5.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="yes"/>
@@ -1268,6 +1268,57 @@ Additional passive components (RLC and trimpots) can be added.</description>
 </deviceset>
 </devicesets>
 </library>
+<library name="regulator-jqi">
+<packages>
+<package name="BH23A-BATT-HOLDER">
+<pad name="P$1+" x="-15.8242" y="0" drill="0.9" shape="long"/>
+<pad name="P$2-" x="15.8242" y="0" drill="0.9" shape="long"/>
+<text x="-2.54" y="2.54" size="1.27" layer="25">&gt;NAME</text>
+<text x="-2.54" y="-3.81" size="1.27" layer="27">&gt;VALUE</text>
+<wire x1="-17.907" y1="6.604" x2="-17.907" y2="-6.604" width="0.127" layer="21"/>
+<wire x1="-17.907" y1="-6.604" x2="17.907" y2="-6.604" width="0.127" layer="21"/>
+<wire x1="17.907" y1="-6.604" x2="17.907" y2="6.604" width="0.127" layer="21"/>
+<wire x1="17.907" y1="6.604" x2="-17.907" y2="6.604" width="0.127" layer="21"/>
+<wire x1="-15.24" y1="-2.54" x2="-15.24" y2="-5.08" width="0.127" layer="21"/>
+<wire x1="-16.51" y1="-3.81" x2="-13.97" y2="-3.81" width="0.127" layer="21"/>
+<wire x1="13.97" y1="-3.81" x2="16.51" y2="-3.81" width="0.127" layer="21"/>
+</package>
+</packages>
+<symbols>
+<symbol name="BATTERY">
+<pin name="P$1+" x="0" y="12.7" length="middle" rot="R270"/>
+<pin name="P$2-" x="0" y="-10.16" length="middle" rot="R90"/>
+<wire x1="-7.62" y1="7.62" x2="7.62" y2="7.62" width="0.254" layer="94"/>
+<wire x1="-2.54" y1="5.08" x2="2.54" y2="5.08" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="2.54" x2="7.62" y2="2.54" width="0.254" layer="94"/>
+<wire x1="-2.54" y1="0" x2="2.54" y2="0" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="-2.54" x2="7.62" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="-2.54" y1="-5.08" x2="2.54" y2="-5.08" width="0.254" layer="94"/>
+<text x="2.54" y="10.16" size="1.778" layer="94">+</text>
+<text x="2.54" y="-7.62" size="1.778" layer="94">-</text>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="BATT-HOLDER">
+<gates>
+<gate name="G$1" symbol="BATTERY" x="0" y="-2.54"/>
+</gates>
+<devices>
+<device name="" package="BH23A-BATT-HOLDER">
+<connects>
+<connect gate="G$1" pin="P$1+" pad="P$1+"/>
+<connect gate="G$1" pin="P$2-" pad="P$2-"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="DIGIKEY" value="BH23APC-ND" constant="no"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -1315,6 +1366,8 @@ Additional passive components (RLC and trimpots) can be added.</description>
 <part name="R7" library="jqi_passives" deviceset="R_SMD" device="R1206"/>
 <part name="R8" library="jqi_passives" deviceset="R_SMD" device="R1206"/>
 <part name="R9" library="jqi_passives" deviceset="R_SMD" device="R1206" value="0R"/>
+<part name="U$1" library="regulator-jqi" deviceset="BATT-HOLDER" device=""/>
+<part name="U$2" library="regulator-jqi" deviceset="BATT-HOLDER" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -1346,7 +1399,7 @@ Additional passive components (RLC and trimpots) can be added.</description>
 <instance part="P+1" gate="1" x="129.54" y="116.84"/>
 <instance part="P-1" gate="1" x="144.78" y="40.64"/>
 <instance part="JP1" gate="A" x="149.86" y="93.98"/>
-<instance part="GND6" gate="1" x="132.08" y="91.44"/>
+<instance part="GND6" gate="1" x="154.94" y="76.2"/>
 <instance part="IN-" gate="G$1" x="-38.1" y="76.2"/>
 <instance part="IN+" gate="G$1" x="-25.4" y="48.26"/>
 <instance part="OUT" gate="G$1" x="96.52" y="63.5" rot="MR0"/>
@@ -1359,6 +1412,8 @@ Additional passive components (RLC and trimpots) can be added.</description>
 <instance part="R7" gate="G$1" x="-17.78" y="60.96" rot="R90"/>
 <instance part="R8" gate="G$1" x="-17.78" y="38.1" rot="R90"/>
 <instance part="R9" gate="G$1" x="-27.94" y="76.2" rot="R180"/>
+<instance part="U$1" gate="G$1" x="165.1" y="101.6"/>
+<instance part="U$2" gate="G$1" x="165.1" y="48.26"/>
 </instances>
 <busses>
 </busses>
@@ -1448,7 +1503,17 @@ Additional passive components (RLC and trimpots) can be added.</description>
 <segment>
 <pinref part="JP1" gate="A" pin="2"/>
 <pinref part="GND6" gate="1" pin="GND"/>
-<wire x1="147.32" y1="93.98" x2="132.08" y2="93.98" width="0.1524" layer="91"/>
+<wire x1="147.32" y1="93.98" x2="154.94" y2="93.98" width="0.1524" layer="91"/>
+<wire x1="154.94" y1="93.98" x2="154.94" y2="91.44" width="0.1524" layer="91"/>
+<pinref part="U$1" gate="G$1" pin="P$2-"/>
+<wire x1="154.94" y1="91.44" x2="154.94" y2="86.36" width="0.1524" layer="91"/>
+<wire x1="154.94" y1="86.36" x2="154.94" y2="78.74" width="0.1524" layer="91"/>
+<wire x1="165.1" y1="91.44" x2="154.94" y2="91.44" width="0.1524" layer="91"/>
+<pinref part="U$2" gate="G$1" pin="P$1+"/>
+<wire x1="165.1" y1="60.96" x2="165.1" y2="86.36" width="0.1524" layer="91"/>
+<wire x1="165.1" y1="86.36" x2="154.94" y2="86.36" width="0.1524" layer="91"/>
+<junction x="154.94" y="91.44"/>
+<junction x="154.94" y="86.36"/>
 </segment>
 <segment>
 <pinref part="GND7" gate="1" pin="GND"/>
@@ -1523,6 +1588,11 @@ Additional passive components (RLC and trimpots) can be added.</description>
 <wire x1="147.32" y1="91.44" x2="144.78" y2="91.44" width="0.1524" layer="91"/>
 <wire x1="144.78" y1="91.44" x2="144.78" y2="53.34" width="0.1524" layer="91"/>
 <junction x="144.78" y="53.34"/>
+<pinref part="U$2" gate="G$1" pin="P$2-"/>
+<wire x1="165.1" y1="38.1" x2="165.1" y2="33.02" width="0.1524" layer="91"/>
+<wire x1="165.1" y1="33.02" x2="149.86" y2="33.02" width="0.1524" layer="91"/>
+<wire x1="149.86" y1="33.02" x2="149.86" y2="53.34" width="0.1524" layer="91"/>
+<wire x1="149.86" y1="53.34" x2="144.78" y2="53.34" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="V+" class="0">
@@ -1538,6 +1608,9 @@ Additional passive components (RLC and trimpots) can be added.</description>
 <wire x1="129.54" y1="104.14" x2="147.32" y2="104.14" width="0.1524" layer="91"/>
 <wire x1="147.32" y1="104.14" x2="147.32" y2="96.52" width="0.1524" layer="91"/>
 <junction x="129.54" y="104.14"/>
+<pinref part="U$1" gate="G$1" pin="P$1+"/>
+<wire x1="165.1" y1="114.3" x2="147.32" y2="114.3" width="0.1524" layer="91"/>
+<wire x1="147.32" y1="114.3" x2="147.32" y2="104.14" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$5" class="0">
